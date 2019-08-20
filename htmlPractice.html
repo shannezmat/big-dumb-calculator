@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Function library example</title>
+  <style>
+
+    body {
+      background-color: cadetblue;
+
+    }
+
+    .inputs-container {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    
+    input {
+      font-size: 2em;
+      color: lightcoral;
+      margin: 50px;
+      display: center;
+      border-style: solid;
+      border-width: 10px;
+
+      border-color: lightcoral;
+      border-radius: 100px;
+      padding: 25px;
+
+    }
+
+    p {
+      font-size: 65px;
+      font-weight: 100;
+      font-family:Arial, Helvetica, sans-serif;
+      color: lightcoral;
+      justify-content: center;
+      margin: 50 auto;
+      display: flex;
+
+    }
+
+
+    .qwe {
+      height: 100px;
+      width: 25%;
+      position: relative;
+      font-size: 45px;
+      justify-content: center;
+      margin: 0 auto;
+      display: flex;
+      color: white;
+      border-radius: 100px;
+      border-color: white;
+      border-width: 10px;
+      background: lightcoral; 
+
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    .qwe:focus {
+      outline: none;
+    }
+
+    
+
+
+
+  </style>
+  <title>Big Dumb Calculator</title>
+</head>
+<body>
+
+  <div class="inputs-container">
+      <input class="numberInput" type="number" onkeyup="numbersOnly(this)">
+    
+      <input class="mathsInput" type="text" onkeyup="operatorsOnly(this)">
+      
+      <input class="secondNumberInput" type="number"onkeyup="numbersOnly(this)">
+  </div>
+    <p>THIS IS A BIG DUMB CALCULATOR</p>
+
+    <button class="qwe">Enter</button>
+  <script>
+    var input = document.querySelector('.numberInput');
+    var secondInput = document.querySelector('.secondNumberInput');
+    var mathsInput = document.querySelector('.mathsInput')
+
+
+    var firstInputValue;
+    var secondInputValue;
+    var mathsInputValue;
+    var test = false;
+    mathsInput.onchange = function() {
+
+      mathsInputValue = mathsInput.value;
+    };
+
+    document.querySelector('.qwe').onclick = function(){
+      setTimeout(() => {
+        test = true;
+      }, 1000);
+
+      test = false;
+      mathLogic();
+    }
+
+    var para = document.querySelector('p');
+
+    input.onchange = function() {
+        firstInputValue = input.value;
+    }
+
+    secondInput.onchange = function() {
+        secondInputValue = secondInput.value;
+    }
+
+    function checkValidNumbers() {
+        let equation = `${firstInputValue} ${mathsInputValue} ${secondInputValue}`;
+        if (isNaN(firstInputValue) || isNaN(secondInputValue)) {
+          return para.textContent = 'You need to enter a number!';
+        } else {
+            return para.textContent = mathLogic(equation);
+        }
+    }
+
+    function mathLogic() {
+      if (mathsInputValue==='+') {
+        mathsAdd();
+      } else if (mathsInputValue==='-') {
+        mathsSubtract();
+      } else if (mathsInputValue==='*') {
+        mathsMultiply();
+      } else if (mathsInputValue==='/') {
+        mathsDivide();
+      } else {
+        return para.textContent = 'You need to enter an operator!';
+      }
+    }
+
+    function mathsAdd() {
+        return para.textContent = Number(firstInputValue) + Number(secondInputValue)
+    }
+
+    function mathsSubtract() {
+        return para.textContent = Number(firstInputValue) - Number(secondInputValue)
+    }
+
+    function mathsMultiply() {
+        return para.textContent = Number(firstInputValue) * Number(secondInputValue)
+    }
+
+    function mathsDivide() {
+        return para.textContent = Number(firstInputValue) / Number(secondInputValue)
+    }
+
+    function operatorsOnly(mathsInput) {
+    var regex = /[^+=*/]/;
+    mathsInput.value = mathsInput.value.replace(regex,"");
+    }
+
+    function numbersOnly(input, secondInput) {
+      var regex = /[^0-9]/;
+      input.value = input.value.replace(regex, "");
+      secondinput.value = secondInput.value.replace(regex,"");
+    }
+
+  </script>
+
+</body>
+</html>
